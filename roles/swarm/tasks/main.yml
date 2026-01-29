@@ -1,0 +1,6 @@
+- name: Initialize Docker Swarm
+  command: docker swarm init
+  when: swarm_init | default(true)
+  register: swarm_init_result
+  failed_when: false
+  changed_when: "'Swarm initialized' in swarm_init_result.stdout"

@@ -1,0 +1,8 @@
+- name: Deploy mysql 8 in swarm
+  command: >
+    docker service create
+    --replicas 1
+    --env MYSQL_ROOT_PASSWORD={{ mysql_root_password }}
+    --publish 3303:3306
+    {{ mysql_image }}
+  failed_when: false

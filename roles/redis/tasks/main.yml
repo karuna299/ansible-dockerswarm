@@ -1,0 +1,7 @@
+- name: Deploy Redis in Swarm
+  command: >
+    docker service create
+    --name redis
+    --publish 6379:6379
+    {{ redis_image }}
+  failed_when: false

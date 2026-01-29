@@ -1,0 +1,9 @@
+docker_packages:
+  Debian:
+    - docker.io
+  RedHat:
+    - docker
+
+mysql_root_password: rootpassword
+mysql_image: mysql:8.0
+redis_image: redis:latest

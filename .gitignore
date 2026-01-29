@@ -1,0 +1,5 @@
+terraform/.terraform/
+terraform/*.tfstate
+terraform/.tfstate.backup
+terraform/override.tf
+terraform/.terraform.lock.hcl
