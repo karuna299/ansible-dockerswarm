@@ -1,7 +1,27 @@
-- name: Deploy Redis in Swarm
-  command: >
-    docker service create
-    --name redis
-    --publish 6379:6379
-    {{ redis_image }}
-  failed_when: false
+- name: Install redis on Debian family
+  apt:
+    name: redis-server
+    state: present
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install redis on RedHat family
+  yum:
+    name: redis
+    state: present
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Start and enable redis service
+  service:
+    name: redis
+    state: started
+    enabled: yes
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Start and enable redis service (RedHat)
+  service:
+    name: redis
+    state: started
+    enabled: yes
+  when: ansible_facts['os_family'] == 'RedHat'
+  

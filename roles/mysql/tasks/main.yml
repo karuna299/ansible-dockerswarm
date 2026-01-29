@@ -1,8 +1,18 @@
-- name: Deploy mysql 8 in swarm
-  command: >
-    docker service create
-    --replicas 1
-    --env MYSQL_ROOT_PASSWORD={{ mysql_root_password }}
-    --publish 3303:3306
-    {{ mysql_image }}
-  failed_when: false
+- name: Install MySQL on Debian familiy
+  apt:
+    name: mysql-server-8.0
+    state: present
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  
+- name: Install MySQL on RedHat family
+  yum:
+    name: mysql-server-8.0
+    state: present
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Start and enable MySQL service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
